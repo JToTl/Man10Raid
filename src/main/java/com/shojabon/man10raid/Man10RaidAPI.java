@@ -36,7 +36,9 @@ public class Man10RaidAPI {
             if(!path.mkdirs()) return false;
         }
 
-        YamlConfiguration config = new YamlConfiguration();
+        File file = new File(plugin.getDataFolder() + File.separator + "games", game.gameName + ".yml");
+        YamlConfiguration config= YamlConfiguration.loadConfiguration(file);
+
         // save data
         config.set("scheduledGames", game.scheduledGames);
 
