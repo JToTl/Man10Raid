@@ -83,6 +83,7 @@ public class RaidGame {
     // anti cheater
     public float mustBeAliveForPercentOfGame = 0.65f;
     public long totalGameTime = 0;
+    public int mustBeInRanking=30;
 
     public ArrayList<Pattern> disabledDamageCountMobs = new ArrayList<>();
 
@@ -137,6 +138,7 @@ public class RaidGame {
 
         // anti cheater
         mustBeAliveForPercentOfGame = (float) config.getDouble("settings.mustBeAliveForPercentOfGame");
+        mustBeInRanking=config.getInt("settings.mustBeInRanking",playersAllowed);
 
         winCommands = new ArrayList<>(config.getStringList("winCommands"));
         loseCommands = new ArrayList<>(config.getStringList("loseCommands"));

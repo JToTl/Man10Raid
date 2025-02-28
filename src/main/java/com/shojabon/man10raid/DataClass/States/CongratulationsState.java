@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.ArrayList;
+
 public class CongratulationsState extends RaidStateData {
 
     RaidGame raid = Man10Raid.api.currentGame;
@@ -26,12 +28,19 @@ public class CongratulationsState extends RaidStateData {
     @Override
     public void start() {
         timerTillNextState.start();
-        for(RaidPlayer player : raid.getPlayersInGame(raid.currentGame)){
+        int rank=0;
+        for(RaidPlayer player : raid.getTotalDamageRanking(raid.currentGame)){
+            rank++;
             if(player.getPlayer() == null) continue;
             if(!player.getPlayer().isOnline()) continue;
             if(player.getPlayer().getLocation().getWorld()!= raid.playerSpawnPoints.get(0).getWorld()&&!player.isSameInventoryState()){
 
                 player.getPlayer().sendMessage(Man10Raid.prefix + "§c§lインベントリの状態が同じではありません");
+                player.livesLeft=0;
+            }
+            if(rank>raid.mustBeInRanking){
+
+                player.getPlayer().sendMessage(Man10Raid.prefix + "§c§lダメージが低すぎます");
                 player.livesLeft=0;
             }
             if(player.livesLeft == 0) {
@@ -100,6 +109,7 @@ public class CongratulationsState extends RaidStateData {
     public void cancel() {
         endAreaTimer.stop();
     }
+
 
 
 }
